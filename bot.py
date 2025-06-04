@@ -1,7 +1,15 @@
 from telegram.ext import Updater, CommandHandler
 import requests
+import os
+from flask import Flask
 
+app = Flask(__name__)
 TOKEN = "7744035483:AAFYnyfwhN74kSveZBl7nXKjGgXKYWtnbw0"
+PORT = int(os.environ.get('PORT', 8080))
+
+@app.route('/')
+def home():
+    return 'Bot is running'
 
 def start(update, context):
     update.message.reply_text("Use /getemail to start")
@@ -95,6 +103,7 @@ def main():
     dp.add_handler(CommandHandler("clear", clear))
     updater.start_polling()
     print("Bot running")
+    app.run(host='0.0.0.0', port=PORT)
     updater.idle()
 
 if __name__ == "__main__":
