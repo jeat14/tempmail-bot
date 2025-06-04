@@ -1,12 +1,7 @@
 from telegram.ext import Updater, CommandHandler
 import requests
-import os
 
 TOKEN = "7744035483:AAFYnyfwhN74kSveZBl7nXKjGgXKYWtnbw0"
-port = int(os.environ.get('PORT', 8080))
-
-# Add this line
-APP_URL = "https://tempmail-bot-ctdi.onrender.com/"
 
 def start(update, context):
     update.message.reply_text("Use /getemail to start")
@@ -98,14 +93,7 @@ def main():
     dp.add_handler(CommandHandler("getemail", getemail))
     dp.add_handler(CommandHandler("checkmails", checkmails))
     dp.add_handler(CommandHandler("clear", clear))
-    
-    # Modified webhook setup
-    updater.start_webhook(
-        listen="0.0.0.0",
-        port=port,
-        url_path=TOKEN,
-        webhook_url=APP_URL + TOKEN
-    )
+    updater.start_polling()
     print("Bot running")
     updater.idle()
 
