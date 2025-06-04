@@ -5,6 +5,9 @@ import os
 TOKEN = "7744035483:AAFYnyfwhN74kSveZBl7nXKjGgXKYWtnbw0"
 port = int(os.environ.get('PORT', 8080))
 
+# Add this line
+APP_URL = "https://tempmail-bot-ctdi.onrender.com/"
+
 def start(update, context):
     update.message.reply_text("Use /getemail to start")
 
@@ -96,11 +99,13 @@ def main():
     dp.add_handler(CommandHandler("checkmails", checkmails))
     dp.add_handler(CommandHandler("clear", clear))
     
-    # Add webhook mode for Render
-    updater.start_webhook(listen="0.0.0.0",
-                          port=port,
-                          url_path=TOKEN,
-                          webhook_url="https://tempmail-bot-ctdi.onrender.com/" + TOKEN)
+    # Modified webhook setup
+    updater.start_webhook(
+        listen="0.0.0.0",
+        port=port,
+        url_path=TOKEN,
+        webhook_url=APP_URL + TOKEN
+    )
     print("Bot running")
     updater.idle()
 
